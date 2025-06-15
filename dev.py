@@ -7,21 +7,27 @@ from mistralai import Mistral
 from openai import OpenAI
 
 # Pydantic models for structured data
-class OCRTextBlock(BaseModel):
-    text: str
-    confidence: float
-    bounding_box: Optional[List[float]] = None
+class ImageData(BaseModel):
+    id: str
+    top_left_x: int
+    top_left_y: int
+    bottom_right_x: int
+    bottom_right_y: int
+    image_base64: str
+
+class PageDimensions(BaseModel):
+    dpi: int
+    height: int
+    width: int
 
 class OCRPage(BaseModel):
-    page_number: int
-    text_blocks: List[OCRTextBlock]
-    width: float
-    height: float
+    index: int
+    markdown: str
+    images: List[ImageData]
+    dimensions: PageDimensions
 
 class OCRResponse(BaseModel):
-    text: str
     pages: List[OCRPage]
-    metadata: dict = Field(default_factory=dict)
 
 def encode_pdf(pdf_path):
     """Encode the pdf to base64."""
@@ -69,24 +75,29 @@ ocr_response = client.ocr.process(
 # Convert Mistral response to our Pydantic model
 try:
     structured_response = OCRResponse(
-        text=ocr_response.text,
         pages=[
             OCRPage(
-                page_number=page.get('page_number', i),
-                text_blocks=[
-                    OCRTextBlock(
-                        text=block.get('text', ''),
-                        confidence=block.get('confidence', 0.0),
-                        bounding_box=block.get('bounding_box', None)
+                index=page.get('index', i),
+                markdown=page.get('markdown', ''),
+                images=[
+                    ImageData(
+                        id=image.get('id', ''),
+                        top_left_x=image.get('top_left_x', 0),
+                        top_left_y=image.get('top_left_y', 0),
+                        bottom_right_x=image.get('bottom_right_x', 0),
+                        bottom_right_y=image.get('bottom_right_y', 0),
+                        image_base64=image.get('image_base64', '')
                     )
-                    for block in page.get('text_blocks', [])
+                    for image in page.get('images', [])
                 ],
-                width=page.get('width', 0.0),
-                height=page.get('height', 0.0)
+                dimensions=PageDimensions(
+                    dpi=page.get('dpi', 0),
+                    height=page.get('height', 0),
+                    width=page.get('width', 0)
+                )
             )
             for i, page in enumerate(ocr_response.pages or [])
-        ],
-        metadata=ocr_response.metadata or {}
+        ]
     )
 
     # Save structured OCR response
@@ -144,7 +155,7 @@ def process_with_openai(ocr_text: str) -> str:
 
 # Process the OCR text with OpenAI
 try:
-    openai_analysis = process_with_openai(structured_response.text)
+    openai_analysis = process_with_openai(structured_response.pages[0].markdown)
     
     # Save the complete analysis
     results = {
