@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from mistralai import Mistral
 from openai import OpenAI
 from dotenv import load_dotenv
+from prompt import get_analysis_prompt
 
 # Load environment variables from .env file
 load_dotenv()
@@ -126,28 +127,15 @@ LLM Pre-Processing API Call
 Parses over the markdown text from the OCR response and returns a JSON object with 
 the fillable fields parsed out and their corresponding value types.
 '''
-def process_with_openai(ocr_text: str) -> str:
+def process_with_llm(ocr_text: str) -> str:
     """Process OCR text with OpenAI to extract structured information."""
-
+    
     openai_client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
         api_key=os.environ["OPENROUTER_API_KEY"],
     )
     
-    prompt = f"""
-    Analyze the following OCR text from a medical document and extract key information in a structured format.
-    Focus on identifying:
-    - Patient information
-    - Medical conditions
-    - Medications
-    - Dates
-    - Important medical terms
-    
-    OCR Text:
-    {ocr_text}
-    
-    Please provide a structured analysis of this information in JSON format.
-    """
+    prompt = get_analysis_prompt(ocr_text)
 
     response = openai_client.chat.completions.create(
         model="google/gemini-2.5-flash-preview-05-20",
@@ -159,7 +147,6 @@ def process_with_openai(ocr_text: str) -> str:
         response_format={ "type": "json_object" }
     )
     
-    
     print(response.choices[0].message.content)
     return response.choices[0].message.content
 
@@ -167,7 +154,7 @@ def process_with_openai(ocr_text: str) -> str:
 
 # Process the OCR text with OpenAI
 try:
-    openai_analysis = process_with_openai(structured_response.pages[0].markdown)
+    openai_analysis = process_with_llm(structured_response.pages[0].markdown)
     
     # Save the complete analysis
     results = {
