@@ -5,6 +5,10 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 from mistralai import Mistral
 from openai import OpenAI
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Pydantic models for structured data
 class ImageData(BaseModel):
@@ -47,8 +51,8 @@ pdf_path = "./Input Data/Abdulla/PA.pdf"
 # Getting the base64 string
 base64_pdf = encode_pdf(pdf_path)
 
-api_key = os.environ["MISTRAL_API_KEY"]
-client = Mistral(api_key=api_key)
+mistrtal_api_key = os.environ["MISTRAL_API_KEY"]
+client = Mistral(api_key=mistrtal_api_key)
 
 ''' 
 STEP 1:
@@ -77,23 +81,23 @@ try:
     structured_response = OCRResponse(
         pages=[
             OCRPage(
-                index=page.get('index', i),
-                markdown=page.get('markdown', ''),
+                index=page.index,
+                markdown=page.markdown,
                 images=[
                     ImageData(
-                        id=image.get('id', ''),
-                        top_left_x=image.get('top_left_x', 0),
-                        top_left_y=image.get('top_left_y', 0),
-                        bottom_right_x=image.get('bottom_right_x', 0),
-                        bottom_right_y=image.get('bottom_right_y', 0),
-                        image_base64=image.get('image_base64', '')
+                        id=image.id,
+                        top_left_x=image.top_left_x,
+                        top_left_y=image.top_left_y,
+                        bottom_right_x=image.bottom_right_x,
+                        bottom_right_y=image.bottom_right_y,
+                        image_base64=image.base64
                     )
-                    for image in page.get('images', [])
+                    for image in page.images
                 ],
                 dimensions=PageDimensions(
-                    dpi=page.get('dpi', 0),
-                    height=page.get('height', 0),
-                    width=page.get('width', 0)
+                    dpi=page.dimensions.dpi,
+                    height=page.dimensions.height,
+                    width=page.dimensions.width
                 )
             )
             for i, page in enumerate(ocr_response.pages or [])
@@ -124,7 +128,11 @@ the fillable fields parsed out and their corresponding value types.
 '''
 def process_with_openai(ocr_text: str) -> str:
     """Process OCR text with OpenAI to extract structured information."""
-    openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+    openai_client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.environ["OPENROUTER_API_KEY"],
+    )
     
     prompt = f"""
     Analyze the following OCR text from a medical document and extract key information in a structured format.
@@ -140,18 +148,22 @@ def process_with_openai(ocr_text: str) -> str:
     
     Please provide a structured analysis of this information in JSON format.
     """
-    
+
     response = openai_client.chat.completions.create(
-        model="gpt-4-turbo-preview",
+        model="google/gemini-2.5-flash-preview-05-20",
         messages=[
-            {"role": "system", "content": "You are a medical document analysis assistant. Extract and structure key information from medical documents in JSON format."},
+            {"role": "developer", "content": "You are a medical document analysis assistant. Extract and structure key information from medical documents in JSON format."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.3,
         response_format={ "type": "json_object" }
     )
     
+    
+    print(response.choices[0].message.content)
     return response.choices[0].message.content
+
+
 
 # Process the OCR text with OpenAI
 try:
