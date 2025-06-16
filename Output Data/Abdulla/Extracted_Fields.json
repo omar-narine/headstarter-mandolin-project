@@ -1,0 +1,1130 @@
+{
+  "Pre-Authorization Form Fields": [
+    {
+      "subheading": "General Request Details",
+      "fields": [
+        {
+          "name": "Request Type",
+          "type": "single_select",
+          "options": [
+            {
+              "value": "Start of treatment",
+              "fields": [
+                {
+                  "name": "Start Date",
+                  "type": "date"
+                }
+              ]
+            },
+            {
+              "value": "Continuation of therapy",
+              "fields": [
+                {
+                  "name": "Date of Last Treatment",
+                  "type": "date"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precertification Requested By",
+          "type": "string"
+        },
+        {
+          "name": "Precertification Requested By Phone",
+          "type": "string"
+        },
+        {
+          "name": "Precertification Requested By Fax",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subheading": "A. PATIENT INFORMATION",
+      "fields": [
+        {
+          "name": "First Name",
+          "type": "string"
+        },
+        {
+          "name": "Last Name",
+          "type": "string"
+        },
+        {
+          "name": "Date of Birth",
+          "type": "date"
+        },
+        {
+          "name": "Address",
+          "type": "string"
+        },
+        {
+          "name": "City",
+          "type": "string"
+        },
+        {
+          "name": "State",
+          "type": "string"
+        },
+        {
+          "name": "ZIP",
+          "type": "string"
+        },
+        {
+          "name": "Home Phone",
+          "type": "string"
+        },
+        {
+          "name": "Work Phone",
+          "type": "string"
+        },
+        {
+          "name": "Cell Phone",
+          "type": "string"
+        },
+        {
+          "name": "E-mail",
+          "type": "string"
+        },
+        {
+          "name": "Current Weight",
+          "type": "number",
+          "units": [
+            "lbs",
+            "kgs"
+          ]
+        },
+        {
+          "name": "Height",
+          "type": "number",
+          "units": [
+            "inches",
+            "cms"
+          ]
+        },
+        {
+          "name": "Allergies",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subheading": "B. INSURANCE INFORMATION",
+      "fields": [
+        {
+          "name": "Member ID #",
+          "type": "string"
+        },
+        {
+          "name": "Does patient have other coverage?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Does patient have other coverage?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Other Coverage ID #",
+                  "type": "string"
+                },
+                {
+                  "name": "Other Coverage Carrier Name",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Group #",
+          "type": "string"
+        },
+        {
+          "name": "Insured_1",
+          "type": "string"
+        },
+        {
+          "name": "Insured_2",
+          "type": "string"
+        },
+        {
+          "name": "Insured_3",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subheading": "C. PRESCRIBER INFORMATION",
+      "fields": [
+        {
+          "name": "First Name",
+          "type": "string"
+        },
+        {
+          "name": "Last Name",
+          "type": "string"
+        },
+        {
+          "name": "Prescriber Type",
+          "type": "single_select",
+          "options": [
+            "M.D.",
+            "D.O.",
+            "N.P.",
+            "P.A."
+          ]
+        },
+        {
+          "name": "Address",
+          "type": "string"
+        },
+        {
+          "name": "City",
+          "type": "string"
+        },
+        {
+          "name": "State",
+          "type": "string"
+        },
+        {
+          "name": "ZIP",
+          "type": "string"
+        },
+        {
+          "name": "Phone",
+          "type": "string"
+        },
+        {
+          "name": "Fax",
+          "type": "string"
+        },
+        {
+          "name": "State License #",
+          "type": "string"
+        },
+        {
+          "name": "NPI #",
+          "type": "string"
+        },
+        {
+          "name": "DEA #",
+          "type": "string"
+        },
+        {
+          "name": "UPIN",
+          "type": "string"
+        },
+        {
+          "name": "Provider Email",
+          "type": "string"
+        },
+        {
+          "name": "Office Contact Name",
+          "type": "string"
+        },
+        {
+          "name": "Office Contact Phone",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subheading": "D. DISPENSING PROVIDER/ADMINISTRATION INFORMATION",
+      "fields": [
+        {
+          "name": "Place of Administration",
+          "type": "multi_select",
+          "options": [
+            "Self-administered",
+            "Physician's Office",
+            "Home",
+            "Outpatient Dialysis Center",
+            "Outpatient Infusion Center",
+            "Home Infusion Center",
+            "Other"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Place of Administration",
+                "value": "Other"
+              },
+              "fields": [
+                {
+                  "name": "Other Place of Administration (Specify)",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "condition": {
+                "field": "Place of Administration",
+                "value": "Home Infusion Center"
+              },
+              "fields": [
+                {
+                  "name": "Home Infusion Agency Name",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy Type",
+          "type": "multi_select",
+          "options": [
+            "Physician's Office",
+            "Retail Pharmacy",
+            "Specialty Pharmacy",
+            "Mail Order",
+            "Other"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Dispensing Provider/Pharmacy Type",
+                "value": "Other"
+              },
+              "fields": [
+                {
+                  "name": "Other Dispensing Provider/Pharmacy Name (Specify)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy Name",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy Address",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy City",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy State",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy ZIP",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy Phone",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy Fax",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy TIN",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy PIN",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy NPI 1",
+          "type": "string"
+        },
+        {
+          "name": "Dispensing Provider/Pharmacy NPI 2",
+          "type": "string"
+        },
+        {
+          "name": "Administration Code(s) (CPT)",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subheading": "E. PRODUCT INFORMATION",
+      "fields": [
+        {
+          "name": "Request is for",
+          "type": "single_select",
+          "options": [
+            "Riabni (rituximab-arrx)",
+            "Rituxan (rituximab)",
+            "Ruxience (rituximab-pvvr)",
+            "Truxima (rituximab-abbs)"
+          ]
+        },
+        {
+          "name": "Dose",
+          "type": "string"
+        },
+        {
+          "name": "Directions for Use",
+          "type": "string"
+        },
+        {
+          "name": "HCPCS Code",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "subheading": "F. DIAGNOSIS INFORMATION",
+      "fields": [
+        {
+          "name": "Primary ICD Code",
+          "type": "string"
+        },
+        {
+          "name": "Other ICD Code",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "subheading": "G. CLINICAL INFORMATION",
+      "fields": [
+        {
+          "name": "Has the patient had prior therapy with the requested product within the last 365 days?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "name": "Has the patient had a trial and failure of any of the following rituximab biosimilars?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Has the patient had a trial and failure of any of the following rituximab biosimilars?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Failed Rituximab Biosimilars",
+                  "type": "multi_select",
+                  "options": [
+                    "Ruxience (rituximab-pvvr)",
+                    "Truxima (rituximab-abbs)"
+                  ]
+                },
+                {
+                  "name": "When was the member's trial and failure of the preferred drug?",
+                  "type": "string"
+                },
+                {
+                  "name": "Please describe the nature of the failure of the preferred drug",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Has the patient had an adverse reaction to any of the following rituximab biosimilars?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Has the patient had an adverse reaction to any of the following rituximab biosimilars?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Adverse Reaction Rituximab Biosimilars",
+                  "type": "multi_select",
+                  "options": [
+                    "Ruxience (rituximab-pvvr)",
+                    "Truxima (rituximab-abbs)"
+                  ]
+                },
+                {
+                  "name": "When was the member's adverse reaction to the preferred drug?",
+                  "type": "string"
+                },
+                {
+                  "name": "Please describe the nature of the adverse reaction to the preferred drug",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Contraindications or other medical reasons patient cannot use preferred biosimilar products (select all that apply)",
+          "type": "multi_select",
+          "options": [
+            "Ruxience (rituximab-pvvr)",
+            "Truxima (rituximab-abbs)"
+          ]
+        },
+        {
+          "name": "Has the patient had a trial and failure of any of the following (MA plans)?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Has the patient had a trial and failure of any of the following (MA plans)?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Failed MA Plan Drugs",
+                  "type": "multi_select",
+                  "options": [
+                    "Inflectra (infliximab-dyyb)",
+                    "Renflexis (infliximab-abda)",
+                    "Simponi Aria (golimumab)"
+                  ]
+                },
+                {
+                  "name": "When was the member's trial and failure of the preferred drug (MA plans)?",
+                  "type": "string"
+                },
+                {
+                  "name": "Please describe the nature of the failure of the preferred drug (MA plans)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Has the patient had an adverse reaction to any of the following (MA plans)?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Has the patient had an adverse reaction to any of the following (MA plans)?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Adverse Reaction MA Plan Drugs",
+                  "type": "multi_select",
+                  "options": [
+                    "Inflectra (infliximab-dyyb)",
+                    "Renflexis (infliximab-abda)",
+                    "Simponi Aria (golimumab)"
+                  ]
+                },
+                {
+                  "name": "When was the member's adverse reaction to the preferred drug (MA plans)?",
+                  "type": "string"
+                },
+                {
+                  "name": "Please describe the nature of the adverse reaction to the preferred drug (MA plans)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Has the patient had a trial and failure of any of the following (MAPD plans - Set 1)?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Has the patient had a trial and failure of any of the following (MAPD plans - Set 1)?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Failed MAPD Plan Drugs Set 1",
+                  "type": "multi_select",
+                  "options": [
+                    "Enbrel (etanercept)",
+                    "Humira (adalimumab)",
+                    "Idacio (adalimumab-aacf)",
+                    "Rinvoq (upadacitinib)",
+                    "Tyenne SC (tocilizumab-aazg)",
+                    "Xeljanz/Xeljanz XR (tofacitinib)"
+                  ]
+                },
+                {
+                  "name": "When was the member's trial and failure of the preferred drug (MAPD plans - Set 1)?",
+                  "type": "string"
+                },
+                {
+                  "name": "Please describe the nature of the failure of the preferred drug (MAPD plans - Set 1)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Has the patient had a trial and failure of any of the following (MAPD plans - Set 2)?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "contingent_fields": [
+            {
+              "condition": {
+                "field": "Has the patient had a trial and failure of any of the following (MAPD plans - Set 2)?",
+                "value": "Yes"
+              },
+              "fields": [
+                {
+                  "name": "Failed MAPD Plan Drugs Set 2",
+                  "type": "multi_select",
+                  "options": [
+                    "Enbrel (etanercept)",
+                    "Humira (adalimumab)",
+                    "Idacio (adalimumab-aacf)",
+                    "Rinvoq (upadacitinib)",
+                    "Tyenne SC (tocilizumab-aazg)",
+                    "Xeljanz/Xeljanz XR (tofacitinib)"
+                  ]
+                },
+                {
+                  "name": "When was the member's adverse reaction to the preferred drug (MAPD plans - Set 2)?",
+                  "type": "string"
+                },
+                {
+                  "name": "Please describe the nature of the adverse reaction to the preferred drug (MAPD plans - Set 2)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Contraindications or other medical reasons patient cannot use preferred products (MA plans) (select all that apply)",
+          "type": "multi_select",
+          "options": [
+            "Inflectra (infliximab-dyyb)",
+            "Renflexis (infliximab-abda)",
+            "Simponi Aria (golimumab)"
+          ]
+        },
+        {
+          "name": "Contraindications or other medical reasons patient cannot use preferred products (MAPD plans) (select all that apply)",
+          "type": "multi_select",
+          "options": [
+            "Enbrel (etanercept)",
+            "Humira (adalimumab)",
+            "Idacio (adalimumab-aacf)",
+            "Rinvoq (upadacitinib)",
+            "Tyenne SC (tocilizumab-aazg)",
+            "Xeljanz/Xeljanz XR (tofacitinib)"
+          ]
+        },
+        {
+          "name": "Will Rituxan (rituximab) be used concomitantly with apremilast, tofacitinib, or other biologic DMARDs?",
+          "type": "boolean",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "subheading": "Acute lymphoid leukemia",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of Philadelphia chromosome-negative acute lymphoid leukemia (ALL)?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "name": "Is Rituxan (rituximab) being used as induction/consolidation therapy?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Autoimmune hemolytic anemia",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of refractory autoimmune hemolytic anemia?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Anti-neutrophil cytoplasmic antibody-associated (ANCA-associated) vasculitides",
+          "fields": [
+            {
+              "name": "Which of the following applies to the patient?",
+              "type": "single_select",
+              "options": [
+                "Wegener granulomatosis",
+                "Churg-Strauss syndrome",
+                "Microscopic polyangiitis",
+                "pauci-immune glomerulonephritis"
+              ]
+            },
+            {
+              "name": "Will Rituxan (rituximab) be given in conjunction with glucocorticoids?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Autoimmune blistering diseases, corticosteroid-refractory",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of corticosteroid-refractory autoimmune blistering disease?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Does the patient have a documented diagnosis of corticosteroid-refractory autoimmune blistering disease?",
+                    "value": "Yes"
+                  },
+                  "fields": [
+                    {
+                      "name": "Which blistering disease applies to the patient?",
+                      "type": "single_select",
+                      "options": [
+                        "pemphigus vulgaris",
+                        "pemphigus folliaceus",
+                        "bullous pemphigoid",
+                        "cicatricial pemphigoid",
+                        "epidermolysis bullosa acquisita",
+                        "paraneoplastic pemphigus",
+                        "None of the above"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "B-cell lymphomas",
+          "fields": [
+            {
+              "name": "Which B-cell lymphoma applies to the patient?",
+              "type": "multi_select",
+              "options": [
+                "AIDS-related B-cell lymphoma",
+                "Burkitt lymphoma",
+                "Diffuse large B-cell lymphoma",
+                "Follicular lymphoma",
+                "Gastric MALT lymphoma",
+                "High-grade B-Cell lymphoma",
+                "Mantle cell lymphoma",
+                "Nodal marginal zone lymphoma",
+                "Nongastric MALT lymphoma",
+                "Primary cutaneous B-cell lymphomas",
+                "Splenic marginal zone lymphoma",
+                "Other"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Which B-cell lymphoma applies to the patient?",
+                    "value": "Other"
+                  },
+                  "fields": [
+                    {
+                      "name": "Other B-cell lymphoma (Specify)",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Castleman's disease",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of multicentric Castleman's disease (angiofollicular lymph node hyperplasia)?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Central nervous system lymphomas",
+          "fields": [
+            {
+              "name": "Which CNS lymphoma applies to the patient?",
+              "type": "single_select",
+              "options": [
+                "leptomeningeal metastases from lymphoma",
+                "primary CNS lymphoma",
+                "none of the above"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Chronic or small lymphocytic leukemia",
+          "fields": [
+            {
+              "name": "Which chronic or small lymphocytic leukemia applies to the patient?",
+              "type": "single_select",
+              "options": [
+                "chronic lymphocytic leukemia (CLL)",
+                "small lymphocytic leukemia",
+                "none of the above"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Cryoglobulinemia",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of cryoglobulinemia?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "name": "Is there clinical documentation that the treatment with corticosteroids and other immunosuppressive agents was ineffective?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Graft versus host disease, chronic",
+          "fields": [
+            {
+              "name": "Is there a documentation that Rituxan (rituximab) being used as last-resort treatment for chronic graft versus host disease (GVHD)?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Hairy cell leukemia",
+          "fields": [
+            {
+              "name": "Which hairy cell leukemia applies to the patient?",
+              "type": "single_select",
+              "options": [
+                "relapsed hairy cell leukemia",
+                "refractory hairy cell leukemia",
+                "none of the above"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Heart and solid organ transplant",
+          "fields": [
+            {
+              "name": "Is Rituxan (rituximab) being used for treatment or prevention (desensitization) of highly sensitized patients with antibody mediated rejection in heart transplant recipients and other solid organ transplant recipients?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Is Rituxan (rituximab) being used for treatment or prevention (desensitization) of highly sensitized patients with antibody mediated rejection in heart transplant recipients and other solid organ transplant recipients?",
+                    "value": "Yes"
+                  },
+                  "fields": [
+                    {
+                      "name": "Which transplant recipient type applies to the patient?",
+                      "type": "single_select",
+                      "options": [
+                        "heart transplant recipient",
+                        "other solid organ transplant recipient"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Immune checkpoint-inhibitor related encephalitis",
+          "fields": [
+            {
+              "name": "Which immune check-point inhibitor caused the encephalitis?",
+              "type": "multi_select",
+              "options": [
+                "Bavencio (avelumab)",
+                "Imfinzi (durvalumab)",
+                "Keytruda (pembrolizumab)",
+                "Opdivo (nivolumab)",
+                "Tecentriq (atezolizumab)",
+                "Yervoy (ipilimumab)",
+                "Other"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Which immune check-point inhibitor caused the encephalitis?",
+                    "value": "Other"
+                  },
+                  "fields": [
+                    {
+                      "name": "Other Immune Check-point Inhibitor (Specify)",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Rheumatoid Arthritis",
+          "fields": [
+            {
+              "name": "Severity of the patient's rheumatoid arthritis",
+              "type": "single_select",
+              "options": [
+                "Mild",
+                "Moderate",
+                "Severe"
+              ]
+            },
+            {
+              "name": "Is there evidence that the disease is active?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "name": "Will Rituxan (rituximab) be used in combination with methotrexate?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Will Rituxan (rituximab) be used in combination with methotrexate?",
+                    "value": "Yes"
+                  },
+                  "fields": [
+                    {
+                      "name": "Was treatment with methotrexate ineffective, not tolerated or contraindicated?",
+                      "type": "boolean",
+                      "options": [
+                        "Yes",
+                        "No"
+                      ],
+                      "contingent_fields": [
+                        {
+                          "condition": {
+                            "field": "Was treatment with methotrexate ineffective, not tolerated or contraindicated?",
+                            "value": "Yes"
+                          },
+                          "fields": [
+                            {
+                              "name": "Reason for methotrexate treatment issue",
+                              "type": "single_select",
+                              "options": [
+                                "ineffective",
+                                "not tolerated",
+                                "contraindicated"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Was treatment with another conventional DMARD ineffective?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Was treatment with another conventional DMARD ineffective?",
+                    "value": "Yes"
+                  },
+                  "fields": [
+                    {
+                      "name": "Ineffective conventional DMARDs",
+                      "type": "multi_select",
+                      "options": [
+                        "azathioprine",
+                        "cyclosporine",
+                        "hydroxychloroquine",
+                        "leflunomide",
+                        "sulfasalazine"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Sj\u00f6gren syndrome",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of Sj\u00f6gren's syndrome?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "name": "Was treatment with corticosteroids and other immunosuppressive agents ineffective?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ],
+              "contingent_fields": [
+                {
+                  "condition": {
+                    "field": "Was treatment with corticosteroids and other immunosuppressive agents ineffective?",
+                    "value": "Yes"
+                  },
+                  "fields": [
+                    {
+                      "name": "Medication 1 (Corticosteroids/Immunosuppressants)",
+                      "type": "string"
+                    },
+                    {
+                      "name": "Dates 1 (Corticosteroids/Immunosuppressants)",
+                      "type": "date"
+                    },
+                    {
+                      "name": "Medication 2 (Corticosteroids/Immunosuppressants)",
+                      "type": "string"
+                    },
+                    {
+                      "name": "Dates 2 (Corticosteroids/Immunosuppressants)",
+                      "type": "date"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Thrombotic thrombocytopenic purpura",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of refractory thrombotic thrombocytopenic purpura (TTP)?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "Waldenstrom's macroglobulinemia",
+          "fields": [
+            {
+              "name": "Does the patient have a documented diagnosis of Waldenstr\u00f6m macroglobulinemia?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "subheading": "For Continuation Requests",
+          "fields": [
+            {
+              "name": "Is this continuation request a result of the patient receiving samples of Rituxan (rituximab)?",
+              "type": "boolean",
+              "options": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "name": "Length of time on Rituxan (rituximab)",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

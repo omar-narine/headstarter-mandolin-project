@@ -54,424 +54,404 @@
     ]
   },
   "llm_analysis": {
-    "form_title": "MEDICARE FORM: Medication Precertification Request",
-    "sections": [
-      {
-        "sub_heading": "General Form Information",
-        "fields": [
+    "form_name": "MEDICARE FORM",
+    "form_type": "Medication Precertification Request",
+    "general_information": {
+      "therapy_status": {
+        "type": "multi_choice_single_select",
+        "options": [
           {
-            "field_name": "Request Type",
-            "type": "select_one",
-            "options": [
-              "Start of treatment",
-              "Continuation of therapy"
+            "label": "Start of treatment",
+            "fields": [
+              {
+                "field_name": "Start Date",
+                "type": "Date",
+                "format": "MM/DD/YYYY"
+              }
             ]
           },
           {
-            "field_name": "Start Date of Treatment",
-            "type": "date",
-            "conditional_on": "Request Type",
-            "condition_value": "Start of treatment"
-          },
-          {
-            "field_name": "Date of Last Treatment",
-            "type": "date",
-            "conditional_on": "Request Type",
-            "condition_value": "Continuation of therapy"
-          },
-          {
-            "field_name": "Precertification Requested By",
-            "type": "string"
-          },
-          {
-            "field_name": "Precertification Request Phone",
-            "type": "string"
-          },
-          {
-            "field_name": "Precertification Request Fax",
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "sub_heading": "A. PATIENT INFORMATION",
-        "fields": [
-          {
-            "field_name": "First Name",
-            "type": "string"
-          },
-          {
-            "field_name": "Last Name",
-            "type": "string"
-          },
-          {
-            "field_name": "Date of Birth",
-            "type": "date"
-          },
-          {
-            "field_name": "Address",
-            "type": "string"
-          },
-          {
-            "field_name": "City",
-            "type": "string"
-          },
-          {
-            "field_name": "State",
-            "type": "string"
-          },
-          {
-            "field_name": "ZIP",
-            "type": "string"
-          },
-          {
-            "field_name": "Home Phone",
-            "type": "string"
-          },
-          {
-            "field_name": "Work Phone",
-            "type": "string"
-          },
-          {
-            "field_name": "Cell Phone",
-            "type": "string"
-          },
-          {
-            "field_name": "E-mail",
-            "type": "string"
-          },
-          {
-            "field_name": "Current Weight",
-            "type": "number",
-            "units_options": [
-              "lbs",
-              "kgs"
-            ]
-          },
-          {
-            "field_name": "Height",
-            "type": "number",
-            "units_options": [
-              "inches",
-              "cms"
-            ]
-          },
-          {
-            "field_name": "Allergies",
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "sub_heading": "B. INSURANCE INFORMATION",
-        "fields": [
-          {
-            "field_name": "Member ID #",
-            "type": "string"
-          },
-          {
-            "field_name": "Group #",
-            "type": "string"
-          },
-          {
-            "field_name": "Does patient have other coverage?",
-            "type": "boolean",
-            "options": [
-              "Yes",
-              "No"
-            ],
-            "sub_fields": [
+            "label": "Continuation of therapy",
+            "fields": [
               {
-                "field_name": "Other Coverage ID #",
-                "type": "string",
-                "conditional_on": "Does patient have other coverage?",
-                "condition_value": "Yes"
-              },
-              {
-                "field_name": "Other Coverage Carrier Name",
-                "type": "string",
-                "conditional_on": "Does patient have other coverage?",
-                "condition_value": "Yes"
-              },
-              {
-                "field_name": "Other Coverage Insured Name",
-                "type": "string",
-                "conditional_on": "Does patient have other coverage?",
-                "condition_value": "Yes",
-                "description": "This field may appear multiple times for multiple insured parties."
+                "field_name": "Date of last treatment",
+                "type": "Date",
+                "format": "MM/DD/YYYY"
               }
             ]
           }
         ]
       },
-      {
-        "sub_heading": "C. PRESCRIBER INFORMATION",
-        "fields": [
+      "precertification_requested_by": {
+        "type": "string",
+        "field_name": "Precertification Requested By"
+      },
+      "precertification_phone": {
+        "type": "string",
+        "field_name": "Phone"
+      },
+      "precertification_fax": {
+        "type": "string",
+        "field_name": "Fax"
+      }
+    },
+    "patient_information": {
+      "first_name": {
+        "type": "string",
+        "field_name": "First Name"
+      },
+      "last_name": {
+        "type": "string",
+        "field_name": "Last Name"
+      },
+      "dob": {
+        "type": "Date",
+        "field_name": "DOB",
+        "format": "MM/DD/YYYY"
+      },
+      "address": {
+        "type": "string",
+        "field_name": "Address"
+      },
+      "city": {
+        "type": "string",
+        "field_name": "City"
+      },
+      "state": {
+        "type": "string",
+        "field_name": "State"
+      },
+      "zip": {
+        "type": "string",
+        "field_name": "ZIP"
+      },
+      "home_phone": {
+        "type": "string",
+        "field_name": "Home Phone"
+      },
+      "work_phone": {
+        "type": "string",
+        "field_name": "Work Phone"
+      },
+      "cell_phone": {
+        "type": "string",
+        "field_name": "Cell Phone"
+      },
+      "email": {
+        "type": "string",
+        "field_name": "E-mail"
+      },
+      "current_weight": {
+        "type": "number",
+        "field_name": "Current Weight",
+        "units_options": [
+          "lbs",
+          "kgs"
+        ]
+      },
+      "height": {
+        "type": "number",
+        "field_name": "Height",
+        "units_options": [
+          "inches",
+          "cms"
+        ]
+      },
+      "allergies": {
+        "type": "string",
+        "field_name": "Allergies"
+      }
+    },
+    "insurance_information": {
+      "member_id": {
+        "type": "string",
+        "field_name": "Member ID #"
+      },
+      "other_coverage": {
+        "type": "boolean",
+        "field_name": "Does patient have other coverage?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "contingent_fields": [
           {
-            "field_name": "First Name",
-            "type": "string"
+            "field_name": "Other Coverage ID #",
+            "type": "string",
+            "condition": "Yes"
           },
           {
-            "field_name": "Last Name",
-            "type": "string"
-          },
-          {
-            "field_name": "Prescriber Title",
-            "type": "select_one",
-            "options": [
-              "M.D.",
-              "D.O.",
-              "N.P.",
-              "P.A."
-            ]
-          },
-          {
-            "field_name": "Address",
-            "type": "string"
-          },
-          {
-            "field_name": "City",
-            "type": "string"
-          },
-          {
-            "field_name": "State",
-            "type": "string"
-          },
-          {
-            "field_name": "ZIP",
-            "type": "string"
-          },
-          {
-            "field_name": "Phone",
-            "type": "string"
-          },
-          {
-            "field_name": "Fax",
-            "type": "string"
-          },
-          {
-            "field_name": "State License #",
-            "type": "string"
-          },
-          {
-            "field_name": "NPI #",
-            "type": "string"
-          },
-          {
-            "field_name": "DEA #",
-            "type": "string"
-          },
-          {
-            "field_name": "UPIN",
-            "type": "string"
-          },
-          {
-            "field_name": "Provider Email",
-            "type": "string"
-          },
-          {
-            "field_name": "Office Contact Name",
-            "type": "string"
-          },
-          {
-            "field_name": "Office Contact Phone",
-            "type": "string"
+            "field_name": "Other Coverage Carrier Name",
+            "type": "string",
+            "condition": "Yes"
           }
         ]
       },
-      {
-        "sub_heading": "D. DISPENSING PROVIDER/ADMINISTRATION INFORMATION",
-        "fields": [
-          {
-            "field_name": "Place of Administration",
-            "type": "multi_select",
-            "options": [
-              "Self-administered",
-              "Physician's Office",
-              "Home",
-              "Outpatient Dialysis Center",
-              "Outpatient Infusion Center",
-              "Home Infusion Center"
-            ]
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy Type",
-            "type": "multi_select",
-            "options": [
-              "Retail Pharmacy",
-              "Specialty Pharmacy",
-              "Mail Order",
-              "Other"
-            ]
-          },
-          {
-            "field_name": "Other Dispensing Provider/Pharmacy Type",
-            "type": "string",
-            "conditional_on": "Dispensing Provider/Pharmacy Type",
-            "condition_value": "Other"
-          },
+      "group_id": {
+        "type": "string",
+        "field_name": "Group #"
+      },
+      "insured_name": {
+        "type": "string",
+        "field_name": "Insured Name"
+      }
+    },
+    "prescriber_information": {
+      "first_name": {
+        "type": "string",
+        "field_name": "First Name"
+      },
+      "last_name": {
+        "type": "string",
+        "field_name": "Last Name"
+      },
+      "degree": {
+        "type": "multi_choice_single_select",
+        "field_name": "Prescriber Degree",
+        "options": [
+          "M.D.",
+          "D.O.",
+          "N.P.",
+          "P.A."
+        ]
+      },
+      "address": {
+        "type": "string",
+        "field_name": "Address"
+      },
+      "city": {
+        "type": "string",
+        "field_name": "City"
+      },
+      "state": {
+        "type": "string",
+        "field_name": "State"
+      },
+      "zip": {
+        "type": "string",
+        "field_name": "ZIP"
+      },
+      "phone": {
+        "type": "string",
+        "field_name": "Phone"
+      },
+      "fax": {
+        "type": "string",
+        "field_name": "Fax"
+      },
+      "state_license_number": {
+        "type": "string",
+        "field_name": "St Lic #"
+      },
+      "npi": {
+        "type": "string",
+        "field_name": "NPI #"
+      },
+      "dea": {
+        "type": "string",
+        "field_name": "DEA #"
+      },
+      "upin": {
+        "type": "string",
+        "field_name": "UPIN"
+      },
+      "provider_email": {
+        "type": "string",
+        "field_name": "Provider Email"
+      },
+      "office_contact_name": {
+        "type": "string",
+        "field_name": "Office Contact Name"
+      },
+      "office_contact_phone": {
+        "type": "string",
+        "field_name": "Office Contact Phone"
+      }
+    },
+    "dispensing_provider_administration_information": {
+      "place_of_administration": {
+        "type": "multi_choice_multi_select",
+        "field_name": "Place of Administration",
+        "options": [
+          "Self-administered",
+          "Physician's Office",
+          "Home",
+          "Outpatient Dialysis Center",
+          "Outpatient Infusion Center",
+          "Home Infusion Center"
+        ],
+        "contingent_fields": [
           {
             "field_name": "Agency Name",
             "type": "string",
-            "description": "For Place of Administration"
-          },
-          {
-            "field_name": "Administration Code(s) (CPT)",
-            "type": "string"
-          },
-          {
-            "field_name": "Place of Administration TIN",
-            "type": "string"
-          },
-          {
-            "field_name": "Place of Administration PIN",
-            "type": "string"
-          },
-          {
-            "field_name": "Place of Administration NPI",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy Name",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy Phone",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy Address",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy City",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy State",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy ZIP",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy Fax",
-            "type": "string"
-          },
-          {
-            "field_name": "Dispensing Provider/Pharmacy NPI",
-            "type": "string"
+            "condition": "Home Infusion Center"
           }
         ]
       },
-      {
-        "sub_heading": "E. PRODUCT INFORMATION",
-        "fields": [
+      "administration_codes": {
+        "type": "string",
+        "field_name": "Administration code(s) (CPT)"
+      },
+      "dispensing_provider_pharmacy": {
+        "type": "multi_choice_single_select",
+        "field_name": "Dispensing Provider/Pharmacy Type",
+        "options": [
+          "Physician's Office",
+          "Retail Pharmacy",
+          "Specialty Pharmacy",
+          "Mail Order",
+          "Other"
+        ],
+        "contingent_fields": [
           {
-            "field_name": "Request is for",
-            "type": "multi_select",
-            "options": [
-              "Riabni (rituximab-arrx)",
-              "Rituxan (rituximab)",
-              "Ruxience (rituximab-pvvr)",
-              "Truxima (rituximab-abbs)"
-            ]
-          },
-          {
-            "field_name": "Dose",
-            "type": "string"
-          },
-          {
-            "field_name": "Directions for Use",
-            "type": "string"
-          },
-          {
-            "field_name": "HCPCS Code",
-            "type": "string"
+            "field_name": "Other Dispensing Provider/Pharmacy Type Description",
+            "type": "string",
+            "condition": "Other"
           }
         ]
       },
-      {
-        "sub_heading": "F. DIAGNOSIS INFORMATION",
-        "fields": [
+      "dispensing_provider_name": {
+        "type": "string",
+        "field_name": "Name"
+      },
+      "dispensing_provider_phone": {
+        "type": "string",
+        "field_name": "Phone"
+      },
+      "dispensing_provider_address": {
+        "type": "string",
+        "field_name": "Address"
+      },
+      "dispensing_provider_city": {
+        "type": "string",
+        "field_name": "City"
+      },
+      "dispensing_provider_state": {
+        "type": "string",
+        "field_name": "State"
+      },
+      "dispensing_provider_zip": {
+        "type": "string",
+        "field_name": "ZIP"
+      },
+      "dispensing_provider_fax": {
+        "type": "string",
+        "field_name": "Fax"
+      },
+      "dispensing_provider_tin": {
+        "type": "string",
+        "field_name": "TIN"
+      },
+      "dispensing_provider_pin": {
+        "type": "string",
+        "field_name": "PIN"
+      },
+      "dispensing_provider_npi": {
+        "type": "string",
+        "field_name": "NPI"
+      }
+    },
+    "product_information": {
+      "requested_product": {
+        "type": "multi_choice_single_select",
+        "field_name": "Request is for",
+        "options": [
+          "Riabni (rituximab-arrx)",
+          "Rituxan (rituximab)",
+          "Ruxience (rituximab-pvvr)",
+          "Truxima (rituximab-abbs)"
+        ]
+      },
+      "dose": {
+        "type": "string",
+        "field_name": "Dose"
+      },
+      "directions_for_use": {
+        "type": "string",
+        "field_name": "Directions for Use"
+      },
+      "hcpcs_code": {
+        "type": "string",
+        "field_name": "HCPCS Code"
+      }
+    },
+    "diagnosis_information": {
+      "primary_icd_code": {
+        "type": "string",
+        "field_name": "Primary ICD Code"
+      },
+      "other_icd_code": {
+        "type": "string",
+        "field_name": "Other ICD Code",
+        "is_optional": true
+      }
+    },
+    "clinical_information": {
+      "prior_therapy_with_requested_product": {
+        "type": "boolean",
+        "field_name": "Has the patient had prior therapy with the requested product within the last 365 days?",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      },
+      "trial_failure_of_biosimilars": {
+        "type": "multi_choice_multi_select",
+        "field_name": "Has the patient had a trial and failure of any of the following rituximab biosimilars?",
+        "options": [
+          "No",
+          "Ruxience (rituximab-pvvr)",
+          "Truxima (rituximab-abbs)"
+        ],
+        "contingent_fields": [
           {
-            "field_name": "Primary ICD Code",
-            "type": "string"
+            "field_name": "When was the member's trial and failure of the preferred drug?",
+            "type": "Date",
+            "condition": "any_selected_except_No"
           },
           {
-            "field_name": "Other ICD Code",
-            "type": "string"
+            "field_name": "Please describe the nature of the failure of the preferred drug",
+            "type": "string",
+            "condition": "any_selected_except_No"
           }
         ]
       },
-      {
-        "sub_heading": "G. CLINICAL INFORMATION",
-        "fields": [
+      "adverse_reaction_to_biosimilars": {
+        "type": "multi_choice_multi_select",
+        "field_name": "Has the patient had an adverse reaction to any of the following rituximab biosimilars?",
+        "options": [
+          "No",
+          "Ruxience (rituximab-pvvr)",
+          "Truxima (rituximab-abbs)"
+        ],
+        "contingent_fields": [
           {
-            "field_name": "Has the patient had prior therapy with the requested product within the last 365 days?",
-            "type": "boolean",
-            "options": [
-              "Yes",
-              "No"
-            ]
+            "field_name": "When was the member's adverse reaction to the preferred drug?",
+            "type": "Date",
+            "condition": "any_selected_except_No"
           },
           {
-            "field_name": "Has the patient had a trial and failure of any of the following rituximab biosimilars?",
-            "type": "multi_select",
-            "options": [
-              "No",
-              "Ruxience (rituximab-pvvr)",
-              "Truxima (rituximab-abbs)"
-            ],
-            "sub_fields": [
-              {
-                "field_name": "When was the member's trial and failure of the preferred drug?",
-                "type": "string",
-                "conditional_on": "Has the patient had a trial and failure of any of the following rituximab biosimilars?",
-                "condition_value": "Any option except 'No'"
-              },
-              {
-                "field_name": "Please describe the nature of the failure of the preferred drug",
-                "type": "string",
-                "conditional_on": "Has the patient had a trial and failure of any of the following rituximab biosimilars?",
-                "condition_value": "Any option except 'No'"
-              }
-            ]
-          },
+            "field_name": "Please describe the nature of the adverse reaction to the preferred drug",
+            "type": "string",
+            "condition": "any_selected_except_No"
+          }
+        ]
+      },
+      "contraindications_to_preferred_biosimilars": {
+        "type": "multi_choice_multi_select",
+        "field_name": "Please explain if there are any contraindications or other medical reason(s) that the patient cannot use any of the following preferred biosimilar products when indicated for the patient's diagnosis?",
+        "options": [
+          "Ruxience (rituximab-pvvr)",
+          "Truxima (rituximab-abbs)"
+        ],
+        "contingent_fields": [
           {
-            "field_name": "Has the patient had an adverse reaction to any of the following rituximab biosimilars?",
-            "type": "multi_select",
-            "options": [
-              "No",
-              "Ruxience (rituximab-pvvr)",
-              "Truxima (rituximab-abbs)"
-            ],
-            "sub_fields": [
-              {
-                "field_name": "When was the member's adverse reaction to the preferred drug?",
-                "type": "string",
-                "conditional_on": "Has the patient had an adverse reaction to any of the following rituximab biosimilars?",
-                "condition_value": "Any option except 'No'"
-              },
-              {
-                "field_name": "Please describe the nature of the adverse reaction to the preferred drug",
-                "type": "string",
-                "conditional_on": "Has the patient had an adverse reaction to any of the following rituximab biosimilars?",
-                "condition_value": "Any option except 'No'"
-              }
-            ]
-          },
-          {
-            "field_name": "Please explain if there are any contraindications or other medical reason(s) that the patient cannot use any of the following preferred biosimilar products when indicated for the patient's diagnosis?",
-            "type": "multi_select",
-            "options": [
-              "Ruxience (rituximab-pvvr)",
-              "Truxima (rituximab-abbs)"
-            ]
+            "field_name": "Reason/Explanation for Contraindications",
+            "type": "string",
+            "condition": "any_selected"
           }
         ]
       }
-    ]
+    }
   }
 }

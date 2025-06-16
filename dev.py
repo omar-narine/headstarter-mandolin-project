@@ -8,9 +8,11 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from prompts import get_ocr_analysis_prompt, get_system_prompt
+from datetime import datetime
 
 # Load environment variables from .env file
 load_dotenv()
+
 
 # Pydantic models for structured data
 class ImageData(BaseModel):
@@ -43,15 +45,16 @@ def encode_pdf(pdf_path):
     except FileNotFoundError:
         print(f"Error: The file {pdf_path} was not found.")
         return None
-    except Exception as e:  # Added general exception handling
+    except Exception as e:  # General exception handling
         print(f"Error: {e}")
         return None
-
+    
 # Path to your pdf
 pdf_path = "./Input Data/Abdulla/PA.pdf"
 
 # Getting the base64 string
 base64_pdf = encode_pdf(pdf_path)
+
 
 mistrtal_api_key = os.environ["MISTRAL_API_KEY"]
 client = Mistral(api_key=mistrtal_api_key)
@@ -138,33 +141,64 @@ def process_with_llm(ocr_text: str) -> str:
     
     response = client.models.generate_content(
         model="gemini-2.5-flash-preview-05-20",
-    config=types.GenerateContentConfig(
-        system_instruction=system_prompt,
-        response_mime_type="application/json"),
+        config=types.GenerateContentConfig(
+            system_instruction=system_prompt,
+            response_mime_type="application/json"),
         contents=[prompt]
     )
     
     print(response.text)
     return response.text
-    
+
 try:
-    llm_analysis = process_with_llm(structured_response.pages[1].markdown)
-    
-    # Save the complete analysis
-    results = {
-        "ocr_response": structured_response.model_dump(),
-        "llm_analysis": json.loads(llm_analysis)
-    }
-    
-    with open('document_analysis.json', 'w') as f:
-        json.dump(results, f, indent=2)
-    
-    print("Analysis complete. Results saved to document_analysis.json")
+    # Process all pages from the OCR response
+    all_pages_text = "\n\n".join([page.markdown for page in structured_response.pages])
+    llm_analysis = process_with_llm(all_pages_text)
     
 except Exception as e:
     print(f"Error in LLM processing: {e}")
 
 
 '''
+STEP 3:
+Saving LLM Processing of PA Form
 
+Saves the processed OCR content with the fields, field options, and descriptions to a JSON folder organized by the patient's name similar to how it is provided in input data.
 '''
+
+def save_processed_data(patient_name: str, ocr_response: OCRResponse, llm_analysis: dict):
+    """Save processed data in a nested folder structure matching input data organization."""
+    
+    # Create output directory structure
+    output_base = "Output Data"
+    patient_dir = os.path.join(output_base, patient_name)
+    os.makedirs(patient_dir, exist_ok=True)
+    
+    # Save OCR response
+    ocr_file = os.path.join(patient_dir, "PA_OCR_Markdown.json")
+    with open(ocr_file, 'w') as f:
+        json.dump(ocr_response.model_dump(), f, indent=2)
+    
+    # Save LLM analysis
+    llm_file = os.path.join(patient_dir, "Extracted_Fields.json")
+    with open(llm_file, 'w') as f:
+        json.dump(llm_analysis, f, indent=2)
+    
+    # Save combined results
+    combined_file = os.path.join(patient_dir, "Combined_Analysis.json")
+    combined_data = {
+        "ocr_response": ocr_response.model_dump(),
+        "llm_analysis": llm_analysis,
+        "metadata": {
+            "processed_date": datetime.now().isoformat(),
+            "patient_name": patient_name
+        }
+    }
+    with open(combined_file, 'w') as f:
+        json.dump(combined_data, f, indent=2)
+    
+    print(f"Processed data saved to {patient_dir}")
+
+# Extract patient name from input path and save processed data
+patient_name = os.path.basename(os.path.dirname(pdf_path))
+save_processed_data(patient_name, structured_response, json.loads(llm_analysis))
