@@ -85,6 +85,88 @@ Based on the provided system prompt, review the following OCR markdown and appro
 '''
 
 
-def get_field_data_collection_prompt() -> str:
+def get_system_data_collection_prompt() -> str:
+    return '''
+Objective:
+You are an AI medical data extraction engine. Your task is to populate a structured form in JSON by extracting relevant clinical and administrative data from unstructured medical text (e.g., OCR'd referral documents).
+
+Inputs:
+- form_schema (JSON): Defines each form field with metadata including label, type, options, units, and depends_on logic.
+- referral_document_text (String): The full OCR-extracted referral package text containing patient, provider, and clinical information.
+
+Guiding Principles:
+1. High-Confidence Inference Allowed:
+   You are permitted to safely infer a negative answer to clinical history questions if the condition is not mentioned anywhere in the document. For example, if a field asks whether the patient has one of several conditions, and none are mentioned anywhere, you may assume the answer is "No" (e.g., false for boolean fields or an empty list for multi-selects).
+
+2. No Fabrication of Specifics:
+   Never fabricate concrete identifiers or details such as phone numbers, addresses, ICD codes, etc. These should only be included if explicitly mentioned.
+
+3. Contextual Inference of Dependent Fields:
+   If a parent field logically implies a dependent field (e.g., “Request Type” is “Start of treatment” → look for "Start Date"), attempt to complete dependent fields accordingly. Otherwise, leave them null.
+
+Core Instructions:
+1. Populate Fields Intelligently:
+   For each field in form_schema, populate it using the referral text. Use logical deduction only when it’s safe and obvious (e.g., silence implies absence of condition). Do not overreach.
+
+2. Improved Handling of Dependencies:
+   For fields with depends_on, represent them nestingly in the JSON output to reflect the dependency relationship.
+
+3. Formatting Rules:
+   - Dates: Use "YYYY-MM-DD" format.
+   - Units: Combine numeric values with standardized units (e.g., "150 lbs").
+   - Options & Booleans: Output must exactly match defined options. Booleans must reflect affirmations (true) or negations (false).
+   - Multi-select: Return as array of matched items.
+   - Missing or Null Fields: If a field is truly missing or ambiguous, set its value to null and explain why in processing_notes.
+
+Output Format:
+Return a single JSON object with two top-level keys:
+- completed_form: A nested object that mirrors the schema, with each subheading as a key and its fields as values. Dependent fields are grouped under their parent where applicable.
+- processing_notes: An array of notes explaining fields left null or why decisions were made.
+
+Output Example:
+{
+  "completed_form": {
+    "Precertification Request Details": {
+      "Request Type": "Start of treatment",
+      "Start Date": "2025-07-15",
+      "Precertification Requested By": {
+        "Name": "Dr. Smith",
+        "Phone": null,
+        "Fax": null
+      }
+    },
+    "Patient Information": {
+      "First Name": "Jane",
+      "Last Name": "Doe",
+      "DOB": "1985-04-12",
+      "Work Phone": null
+    },
+    "Insurance Information": {
+      "Does patient have other coverage?": false
+    }
+  },
+  "processing_notes": [
+    {
+      "field": "Work Phone",
+      "note": "Not mentioned in the referral document."
+    },
+    {
+      "field": "Start Date",
+      "note": "Inferred based on confirmed request type."
+    }
+  ]
+}
+'''
+
+def get_data_collection_prompt(llm_analysis: str, referral_package_ocr="") -> str:
     return f'''
+
+Based on the provided system prompt, review the form fields along with the provided referral package to identify the appropriate information needed in order to fill out the fields for this customer. If no value is present for the referral package OCR, refer to the provided referral_package PDF for values.
+
+# LLM Extracted Fields #
+
+{llm_analysis}
+
+# Referral Package OCR # 
+{referral_package_ocr} 
 '''
