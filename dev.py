@@ -122,7 +122,7 @@ except Exception as e:
 '''
 STEP 2:
 LLM Pre-Processing API Call
-- model: gpt-4-turbo-preview
+- model: gemini-2.5-flash-preview-05-20
 - text:
     - type: markdown
     - markdown: markdown text from the OCR response
@@ -153,7 +153,7 @@ def process_with_llm(ocr_text: str) -> str:
 try:
     # Process all pages from the OCR response
     all_pages_text = "\n\n".join([page.markdown for page in structured_response.pages])
-    llm_analysis = process_with_llm(all_pages_text)
+    llm_analysis = process_with_llm(structured_response)
     
 except Exception as e:
     print(f"Error in LLM processing: {e}")
@@ -202,3 +202,25 @@ def save_processed_data(patient_name: str, ocr_response: OCRResponse, llm_analys
 # Extract patient name from input path and save processed data
 patient_name = os.path.basename(os.path.dirname(pdf_path))
 save_processed_data(patient_name, structured_response, json.loads(llm_analysis))
+
+
+'''
+Step 4:
+AI Gathering of Necessary Field Data for Entry
+- model: gemini-2.5-flash-preview-05-20
+- text:
+    - type: application/json
+- response_format: json_object
+
+Provided the full referral_package and the OCR derived fields, the AI model will be allowed to collect the information it deems necessary to fill in the fields appropriately
+'''
+
+
+
+
+
+'''
+Step 4:
+
+AI Gathering of Necessary Field Data for Entry
+'''
