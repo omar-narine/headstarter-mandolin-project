@@ -4,9 +4,10 @@ import json
 from typing import List, Optional
 from pydantic import BaseModel, Field
 from mistralai import Mistral
-from openai import OpenAI
 from dotenv import load_dotenv
-from prompt import get_analysis_prompt
+from google import genai
+from google.genai import types
+from prompts import get_ocr_analysis_prompt, get_system_prompt
 
 # Load environment variables from .env file
 load_dotenv()
@@ -128,38 +129,31 @@ Parses over the markdown text from the OCR response and returns a JSON object wi
 the fillable fields parsed out and their corresponding value types.
 '''
 def process_with_llm(ocr_text: str) -> str:
-    """Process OCR text with OpenAI to extract structured information."""
+    """Process OCR text with LLMs to extract structured information."""
     
-    openai_client = OpenAI(
-        base_url="https://openrouter.ai/api/v1",
-        api_key=os.environ["OPENROUTER_API_KEY"],
+    client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+    
+    system_prompt = get_system_prompt()
+    prompt = get_ocr_analysis_prompt(ocr_text)
+    
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-preview-05-20",
+    config=types.GenerateContentConfig(
+        system_instruction=system_prompt,
+        response_mime_type="application/json"),
+        contents=[prompt]
     )
     
-    prompt = get_analysis_prompt(ocr_text)
-
-    response = openai_client.chat.completions.create(
-        model="google/gemini-2.5-flash-preview-05-20",
-        messages=[
-            {"role": "developer", "content": "You are a medical document analysis assistant. Extract and structure key information from medical documents in JSON format."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.3,
-        response_format={ "type": "json_object" }
-    )
+    print(response.text)
+    return response.text
     
-    print(response.choices[0].message.content)
-    return response.choices[0].message.content
-
-
-
-# Process the OCR text with OpenAI
 try:
-    openai_analysis = process_with_llm(structured_response.pages[0].markdown)
+    llm_analysis = process_with_llm(structured_response.pages[1].markdown)
     
     # Save the complete analysis
     results = {
         "ocr_response": structured_response.model_dump(),
-        "openai_analysis": json.loads(openai_analysis)
+        "llm_analysis": json.loads(llm_analysis)
     }
     
     with open('document_analysis.json', 'w') as f:
@@ -168,5 +162,9 @@ try:
     print("Analysis complete. Results saved to document_analysis.json")
     
 except Exception as e:
-    print(f"Error in OpenAI processing: {e}")
+    print(f"Error in LLM processing: {e}")
 
+
+'''
+
+'''
